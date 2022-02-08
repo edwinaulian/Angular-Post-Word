@@ -11,7 +11,8 @@ export class PostsServices {
     private postUpdated = new Subject<PostData[]>();
 
     getPosts() {
-        return [...this.posts];
+        // return [...this.posts];
+        return localStorage.getItem('dataPost') ? JSON.parse(localStorage.getItem('dataPost')) : [];
     }
 
     getPostUpdatedListenner() {
@@ -21,6 +22,7 @@ export class PostsServices {
     addPostsMethode(title: string, content: string) {
         const post: PostData = { title: title, content: content };
         this.posts.push(post);
+        localStorage.setItem("dataPost", JSON.stringify([...this.posts]));
         this.postUpdated.next([...this.posts]);
     }
 
